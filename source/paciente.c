@@ -17,7 +17,7 @@ struct paciente{
     char pele[4];
     //Para poder contar o numeros de pacientes com pelo menos um atendimento;
     int atendimento;
-    struct lesoes * lesoes;
+    tLesoes * lesoes;
 
 };
 struct data{
@@ -42,8 +42,7 @@ tPaciente *LerECriarPaciente(){
     
     scanf("%s%*c", paciente->tel);
     
-    scanf("%s%*c",paciente->gen);
-    
+    scanf("%s%*c",paciente->gen);    
     return paciente;
 }
 int RetornarSusPaciente(tPaciente *paciente){

@@ -11,7 +11,7 @@ struct lesao{
 
 };
 
-tLesao *Lesao(){
+tLesao *CriarELerLesao(){
     //Ler lesao
 
 
@@ -19,4 +19,14 @@ tLesao *Lesao(){
     tLesao *lesao = (tLesao *) malloc(sizeof(tLesao));
     //Criar rotulos para cada paciente;
     return lesao;
+}
+
+tLesao **CriarVetorLesoes(int tam){
+    if(tam==0){
+    tLesao **lesoes = (tLesao **) malloc(sizeof(tLesao *));
+    }
+    tLesao **lesoes = realloc(lesoes, sizeof(tLesao*)*(tam+1));
+    lesoes[tam-1] = CriarELerLesao();
+
+
 }
