@@ -6,5 +6,6 @@
 #include <string.h>
 
 typedef struct lesao tLesao;
-
+tLesao *CriarELerLesao();
+char * RetornarLog(tLesao *lesao);
 #endif

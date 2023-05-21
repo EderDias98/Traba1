@@ -25,6 +25,9 @@ int TipoDeMes(int mes);
 
  void LiberaData(tData *data);
 
-
+int Dia(tData *data);
+int Mes(tData *data);
+int Ano(tData *data);
+int CalcularIdade(tData * data);
 
 #endif

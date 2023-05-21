@@ -1,7 +1,7 @@
 # My third makefile
  
 # Name of the project
-PROJ_NAME=Trab1
+PROJ_NAME=trab1
  
 # .c files
 C_SOURCE=$(wildcard ./source/*.c)

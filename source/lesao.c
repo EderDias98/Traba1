@@ -2,9 +2,9 @@
 
 struct lesao{
     //(L1,L2,...,Ln);
-    char rot[3];//rotulos
-    char *diag;//diagnósticos
-    char *reg_corp;//regiao do corpo
+    char rot[10];//rotulos
+    char diag[40];//diagnósticos
+    char reg_corp[30];//regiao do corpo
     float tam;//tamanhoa em mm da lesao
     int ciru;// enviado para cirurgia
     int crio;//enviado para crioterapia
@@ -12,21 +12,25 @@ struct lesao{
 };
 
 tLesao *CriarELerLesao(){
-    //Ler lesao
-
 
     //Criar lesao
     tLesao *lesao = (tLesao *) malloc(sizeof(tLesao));
-    //Criar rotulos para cada paciente;
+    //Ler lesao
+    printf("Digite Rotulo\n");
+    scanf("%[^\n]%*c", lesao->rot);
+    printf("Digite Diagnostico\n");
+    scanf("%[^\n]%*c", lesao->diag);
+    printf("Digite Regiao do Corpo\n");
+    scanf("%[^\n]%*c", lesao->reg_corp);
+    printf("Digite Tamanho\n");
+    scanf("%f%*c", &lesao->tam);
+    printf("Digite se é necessário cirurgia\n");
+    scanf("%d%*c", &lesao->ciru);
+    printf("Digite se é necessáio crioterapia\n");
+    scanf("%d%*c", &lesao->crio);
+    printf("%s\n", lesao->reg_corp);
     return lesao;
 }
-
-tLesao **CriarVetorLesoes(int tam){
-    if(tam==0){
-    tLesao **lesoes = (tLesao **) malloc(sizeof(tLesao *));
-    }
-    tLesao **lesoes = realloc(lesoes, sizeof(tLesao*)*(tam+1));
-    lesoes[tam-1] = CriarELerLesao();
-
-
-}
+ char * RetornarLog(tLesao *lesao){
+    return lesao->rot;
+ }

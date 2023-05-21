@@ -18,22 +18,82 @@ tPacientes* CriarPacientes(){
 tPacientes *CadastrarPacientes(tPacientes *pacientes){
     
     tPaciente *paciente = LerECriarPaciente();
+    int idx=0;
     if(EhSusUnico(pacientes, RetornarSusPaciente(paciente))){
-        int idx = pacientes->tam++;
+        if(pacientes->tam==0){
+             pacientes->tam++;
+             idx = pacientes->tam -1;
+             pacientes->vet = CriarVetPacientes();
+             pacientes->vet[idx] = paciente;
+             return pacientes;
+        }
+        pacientes->tam++;
+        idx = pacientes->tam -1;
+        pacientes->vet = realloc(pacientes->vet, sizeof(tPaciente *)*pacientes->tam);
         pacientes->vet[idx] = paciente;
     }else{
-        printf("Nao e possivel cadastrar esse usuário pois ele já foi cadastrado\n");
+        printf("Nao é possivel cadastrar esse usuário pois ele já foi cadastrado\n");
     }
 
     return pacientes;
 }
 
-int EhSusUnico(tPacientes *pacientes, int sus){
+int EhSusUnico(tPacientes *pacientes, char *sus){
     int i;
     for(i=0;i<pacientes->tam;i++){
-        if(sus == RetornarSusPaciente(pacientes->vet[i]));
+        if( !strcmp(sus,RetornarSusPaciente(pacientes->vet[i])))
             return 0;
     }
     return 1;
 }
+ void LiberarPacientes(tPacientes *pacientes){
+    int i;
+    for(i=0; i<pacientes->tam;i++){
+        if(!pacientes->vet[i])
+            LiberarPaciente(pacientes->vet[i]);
+    }
+    free(pacientes);
+ }
 
+void GerarRelatorio(tPacientes *pacientes,char *path){
+    
+ 
+    int i;
+    // printf("\n%d\n", pacientes->tam);
+    for(i=0; i<pacientes->tam;i++){
+        EscreverRelatorio(pacientes->vet[i],path);
+    }
+
+ }
+ tPacientes * RealizarConsulta(tPacientes * pacientes, char *path){
+
+    char sus[20];
+    scanf("%s%*c", sus);
+
+    int idx;
+    if( (idx = AcharIndexPacientes(pacientes,sus)) == -1){
+        printf("O paciente precisa estar cadastrado\n");
+        exit(-1);
+    }
+    pacientes->vet[idx] = AtenderPaciente(pacientes->vet[idx], path);
+    return pacientes;
+ }
+int  AcharIndexPacientes(tPacientes * pacientes,char *sus){
+    int i;
+    for(i=0;i<pacientes->tam;i++){
+        if( !strcmp(sus,RetornarSusPaciente(pacientes->vet[i])))
+            return i;
+    }
+    return -1;
+} 
+void RealizarBusca(tPacientes * pacientes, char *path){
+    char sus[20];
+    scanf("%s%*c", sus);
+
+    int idx;
+    if( (idx = AcharIndexPacientes(pacientes,sus)) == -1){
+        printf("O paciente precisa estar cadastrado\n");
+        exit(-1);
+    }
+    EscreverPaciente(pacientes->vet[idx],path);
+}
