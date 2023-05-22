@@ -114,3 +114,12 @@ int RetornarQtdCirurgias2(tLesoes *lesoes){
 int RetornarQtdCrioterapias2(tLesoes *lesoes){
     return lesoes->qtd_crio;
  }
+tDiagnosticos *PreencherDiagnosticos2(tDiagnosticos *diagnosticos,tLesoes *lesoes, int tam){
+    int i;
+    char **str = (char *) malloc(sizeof(char*));
+    for(i=0; i<tam; i++){
+        str =RetornarDiagnostico(diagnosticos,lesoes->vet[i]);
+        diagnosticos = PreencherDiagnosticos3(diagnosticos,*str)
+    }
+    free(str);
+}

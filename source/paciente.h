@@ -20,5 +20,5 @@ float DesvioPadraoLesoes(tPaciente **paciente_vet,int tam, int media);
 int RetornarQtdLesoes(tPaciente **paciente_vet,int tam);
 int RetornarQtdCirurgias1(tPaciente **paciente_vet,int tam);
 int RetornarQtdCrioterapias1(tPaciente **paciente_vet,int tam);
-
+tDiagnosticos * PreencherDiagnosticos1(tDiagnosticos *diagnosticos, tPaciente **pacientes_vet, int tam_p);
 #endif

@@ -77,8 +77,9 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     int qtd_cr = RetornarQtdCrioterapias1(pacientes->vet, pacientes->tam);
     fprintf(file,"NUMERO TOTAL DE CIRURGIAS: %d (%.2f%%)\n",qtd_ci, (qtd_ci/(float)qtd_l));
     fprintf(file,"NUMERO TOTAL DE CRIOTERAPIAS: %d (%.2f%%)\n",qtd_cr, (qtd_cr/(float)qtd_l));
-
-        EscreverRelatorio(pacientes->vet[i],path);
+    fprintf(file,"DISTRIBUICAO POR DIAGNOSTICO:\n");
+    tDiagnosticos *diagnosticos= CriarDiagnosticos();
+    diagnosticos = PreencherDiagnosticos1(diagnosticos, RetornartDiagnosticosVet(diagnosticos), pacientes->tam );
 
  }
  tPacientes * RealizarConsulta(tPacientes * pacientes, char *path){

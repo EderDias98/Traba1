@@ -221,3 +221,9 @@ int RetornarQtdCrioterapias1(tPaciente **paciente_vet,int tam){
     }
     return cont;    
 }
+tDiagnosticos * PreencherDiagnosticos1(tDiagnosticos *diagnosticos, tPaciente **pacientes_vet, int tam_p){
+    int i;
+    for(i=0; i<tam;i++){
+        PreencherDiagnosticos2(diagnosticos,pacientes_vet[i]->lesoes);
+    }
+}

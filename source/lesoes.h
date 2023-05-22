@@ -11,5 +11,5 @@ int RetornarTamLesao1(tLesoes *lesoes, int idx);
 int RetornarQtdCirurgias2(tLesoes *lesoes);
 
 int RetornarQtdCrioterapias2(tLesoes *lesoes);
-
+tDiagnosticos *PreencherDiagnosticos2(tDiagnosticos *diagnosticos,tLesoes *lesoes, int tam);
 #endif

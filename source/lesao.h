@@ -5,6 +5,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <math.h>
+#include "diagnosticos.h"
 
 typedef struct lesao tLesao;
 tLesao *CriarELerLesao();
