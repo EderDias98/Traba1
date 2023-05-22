@@ -50,6 +50,14 @@ tLesoes * CadastrarLesoes(tLesoes *lesoes){
     for(i=0;i<n;i++){
         lesoes = CriarVetorLesoes(lesoes);
     }
+    for(i=0; i<lesoes->tam;i++){
+        if(EhCirurgia(lesoes->vet[i])){
+            lesoes->qtd_ciru++;
+        }
+        if(EhCrioterapia(lesoes->vet[i])){
+            lesoes->qtd_crio++;
+        }
+    }
     return lesoes;
  }
 void ArmazenarLogs(tLesoes *lesoes,char *sus, char *path){
@@ -93,3 +101,16 @@ void EscreverLesoes(tLesoes * lesoes, char *path){
     }
 
 }
+int RetornarTamLesoes(tLesoes *lesoes){
+    return lesoes->tam;
+}
+int RetornarTamLesao1(tLesoes *lesoes, int idx){
+
+    return RetornarTamLesao2(lesoes->vet[idx]);
+}
+int RetornarQtdCirurgias2(tLesoes *lesoes){
+    return lesoes->qtd_ciru;
+ }
+int RetornarQtdCrioterapias2(tLesoes *lesoes){
+    return lesoes->qtd_crio;
+ }

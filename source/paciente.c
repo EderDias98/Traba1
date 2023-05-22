@@ -45,6 +45,7 @@ tPaciente *LerECriarPaciente(){
     // scanf("%s%*c", paciente->tel);
     
     scanf("%c%*c",&paciente->gen);
+    paciente->atendimento=0;
 
     return paciente;
 }
@@ -76,6 +77,7 @@ void EscreverRelatorio(tPaciente *paciente,char *path){
     fclose(file);
 }
 tPaciente * AtenderPaciente(tPaciente *paciente, char *path){
+    paciente->atendimento=1;
     printf("O paciente possui diabetes?\n");
     scanf("%s%*c",paciente->diab);
     printf("O paciente é fumante?\n");
@@ -111,9 +113,10 @@ tPaciente * AtenderPaciente(tPaciente *paciente, char *path){
     Mes(paciente->nasc),Ano(paciente->nasc), idade);
     if(paciente->gen =='M'){
         fprintf(file,"GENERO: MASCULINO\n");
-    }else{
+    }else if(paciente->gen=='F'){
         fprintf(file,"GENERO: FEMININO\n");
-
+    }else {
+        fprintf(file,"GENERO: OUTROS\n");
     }
     fprintf(file,"TELEFONE: %s\n\n",paciente->tel);
     fprintf(file,"DIABETES: %s\n",paciente->diab);
@@ -125,3 +128,96 @@ tPaciente * AtenderPaciente(tPaciente *paciente, char *path){
     EscreverLesoes(paciente->lesoes, path_r);
     
  }
+int QtdPaciAten(tPaciente ** pacientes_vet, int tam){
+    int i,cont=0;
+    for(i=0 ;i<tam;i++){
+        cont +=pacientes_vet[i]->atendimento;
+    }
+    return cont;
+}
+int IdadeMedia(tPaciente ** pacientes_vet, int tam){
+    int i,cont=0;
+    for(i=0 ;i<tam;i++){
+        cont += CalcularIdade(pacientes_vet[i]->nasc);
+    }
+    return (cont/tam);
+}
+int DesvioPadraoIdade(tPaciente ** pacientes_vet, int tam, int media){
+    int i,desvio_p=0;
+    for(i=0; i<tam;i++){
+        desvio_p += pow(CalcularIdade(pacientes_vet[i]->nasc) - media, 2); 
+    }
+    desvio_p = sqrt(desvio_p/tam);
+    return desvio_p;
+}
+float DistribuicaoMasculina(tPaciente ** pacientes_vet, int tam){
+    int soma=0,i;
+    for(i=0; i<tam;i++){
+        if(pacientes_vet[i]->gen == 'M'){
+            soma+=1;
+        }
+    }
+    return (soma/(float)tam);
+}
+float DistribuicaoFeminina(tPaciente ** pacientes_vet, int tam){
+    int soma=0,i;
+    for(i=0; i<tam;i++){
+        if(pacientes_vet[i]->gen == 'F'){
+            soma+=1;
+        }
+    }
+    return (soma/(float)tam);
+}
+float DistribuicaoOutros(tPaciente ** pacientes_vet, int tam){
+    int soma=0,i;
+    for(i=0; i<tam;i++){
+        if(!(pacientes_vet[i]->gen == 'F') && !(pacientes_vet[i]->gen == 'M')){
+            soma+=1;
+        }
+    }
+    return (soma/(float)tam);
+}
+float TamanhoMedioLesao(tPaciente **paciente_vet, int tam){
+    int i,j,soma=0, cont=0;
+    for(i=0; i<tam; i++){
+        for(j=0; j<RetornarTamLesoes(paciente_vet[i]->lesoes);j++){
+            soma +=RetornarTamLesao1(paciente_vet[i]->lesoes,j);
+            cont++;
+        }
+    }
+    return (soma/cont);
+}
+float DesvioPadraoLesoes(tPaciente **paciente_vet,int tam, int media){
+    int i,j,desvio_p=0, cont=0;
+    for(i=0; i<tam; i++){
+        for(j=0; j<RetornarTamLesoes(paciente_vet[i]->lesoes);j++){
+            desvio_p += pow(RetornarTamLesao1(paciente_vet[i]->lesoes,j) - media,2);
+            cont++;
+        }
+    }
+    desvio_p = sqrt(desvio_p/cont);
+    return desvio_p;   
+}
+int RetornarQtdLesoes(tPaciente **paciente_vet,int tam){
+    int i,j,cont=0;
+    for(i=0; i<tam; i++){
+        for(j=0; j<RetornarTamLesoes(paciente_vet[i]->lesoes);j++){
+            cont++;
+        }
+    }
+    return cont;
+}
+int RetornarQtdCirurgias1(tPaciente **paciente_vet,int tam){
+    int i,j,cont=0;
+    for(i=0; i<tam; i++){
+        cont+= RetornarQtdCirurgias2(paciente_vet[i]->lesoes);
+    }
+    return cont;    
+}
+int RetornarQtdCrioterapias1(tPaciente **paciente_vet,int tam){
+    int i,j,cont=0;
+    for(i=0; i<tam; i++){
+        cont+= RetornarQtdCrioterapias2(paciente_vet[i]->lesoes);
+    }
+    return cont;    
+}

@@ -64,3 +64,13 @@ tLesao *CriarELerLesao(){
 
     fprintf(file,"%s - %s - %s - %.0fMM %s\n", lesao->rot, lesao->diag, lesao->reg_corp, lesao->tam, str);
  }
+
+ int RetornarTamLesao2(tLesao * lesao){
+    return lesao->tam;
+ }
+int EhCirurgia(tLesao * lesao){
+    return lesao->ciru;
+}
+int EhCrioterapia(tLesao * lesao){
+    return lesao->crio;
+}

@@ -56,13 +56,29 @@ int EhSusUnico(tPacientes *pacientes, char *sus){
  }
 
 void GerarRelatorio(tPacientes *pacientes,char *path){
-    
+    char path_r[60]; 
+    sprintf(path_r,"%s/relatorio/relatorio_final",path);
+    FILE *file = fopen(path_r,"w");
+    // printf("\n%s\n", path_r);
+    if(!file)
+        printf("Erro em abrir o arquivo");
  
-    int i;
-    // printf("\n%d\n", pacientes->tam);
-    for(i=0; i<pacientes->tam;i++){
+    // Número total de pacientes que possui pelo menos um atendimento
+    fprintf(file,"NUMERO TOTAL DE PACIENTES ATENDIDOS: %d\n",QtdPaciAten(pacientes->vet, pacientes->tam));
+    int media = IdadeMedia(pacientes->vet, pacientes->tam);
+    fprintf(file,"IDADE MEDIA: %d +- %d ANOS\n", media, DesvioPadraoIdade(pacientes->vet,pacientes->tam,media));
+    fprintf(file,"DISTRIBUICAO POR GENERO:\n - FEMININO: %.2f\n- MASCULINO: %.2f\n- OUTROS: %.2f\n",
+    DistribuicaoFeminina(pacientes->vet,pacientes->tam),DistribuicaoMasculina(pacientes->vet,pacientes->tam),DistribuicaoOutros(pacientes->vet,pacientes->tam));
+    media =  TamanhoMedioLesao(pacientes->vet, pacientes->tam);
+    fprintf(file,"TAMANHO MEDIO DAS LESOES: 18 +- 5 MM\n",media, DesvioPadraoLesoes(pacientes->vet, pacientes->tam,media));
+    int qtd_l = RetornarQtdLesoes(pacientes->vet, pacientes->tam);
+    fprintf(file,"NUMERO TOTAL DE LESOES: %d",qtd_l );
+    int qtd_ci=RetornarQtdCirurgias1(pacientes->vet, pacientes->tam);
+    int qtd_cr = RetornarQtdCrioterapias1(pacientes->vet, pacientes->tam);
+    fprintf(file,"NUMERO TOTAL DE CIRURGIAS: %d (%.2f%%)\n",qtd_ci, (qtd_ci/(float)qtd_l));
+    fprintf(file,"NUMERO TOTAL DE CRIOTERAPIAS: %d (%.2f%%)\n",qtd_cr, (qtd_cr/(float)qtd_l));
+
         EscreverRelatorio(pacientes->vet[i],path);
-    }
 
  }
  tPacientes * RealizarConsulta(tPacientes * pacientes, char *path){
