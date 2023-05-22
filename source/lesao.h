@@ -8,4 +8,7 @@
 typedef struct lesao tLesao;
 tLesao *CriarELerLesao();
 char * RetornarLog(tLesao *lesao);
+int RetornarQtdCiru(tLesao **lesao, int tam);
+int RetornarQtdCrio(tLesao **lesao, int tam);
+void EscreverLesao(tLesao *lesao,char *path);
 #endif

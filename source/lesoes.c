@@ -18,7 +18,6 @@ tLesoes *CriarLesoes(){
 
 tLesoes *CriarVetorLesoes(tLesoes *lesoes){
     if(lesoes->tam==0){
-        printf("@@\n");
         lesoes->tam++;
         lesoes->vet = (tLesao **) malloc(sizeof(tLesao*));
         lesoes->vet[lesoes->tam-1] = CriarELerLesao();
@@ -74,4 +73,23 @@ void ArmazenarLogs(tLesoes *lesoes,char *sus, char *path){
     }
     free(log);
     fclose(file);
+}
+void EscreverLesoes(tLesoes * lesoes, char *path){
+    FILE *file = fopen(path,"a");
+    if(!file){
+        printf("Erro ao abrir o arquivo\n");
+        exit(-1);
+    }
+    fprintf(file,"LESOES:\n");
+    fprintf(file,"TOTAL: %d\n", lesoes->tam);
+    lesoes->qtd_ciru = RetornarQtdCiru(lesoes->vet, lesoes->tam);
+    lesoes->qtd_crio = RetornarQtdCrio(lesoes->vet, lesoes->tam);
+    fprintf(file,"ENVIADA PARA CIRURGIA: %d\n", lesoes->qtd_ciru);
+    fprintf(file,"ENVIADA PARA CRIOTERAPIA: %d\n\n", lesoes->qtd_crio);
+    fprintf(file,"DESCRICAO DAS LESOES:\n");
+    int i;
+    for(i=0; i<lesoes->tam;i++){
+        EscreverLesao(lesoes->vet[i],path);
+    }
+
 }

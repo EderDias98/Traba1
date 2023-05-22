@@ -98,10 +98,13 @@ tPaciente * AtenderPaciente(tPaciente *paciente, char *path){
 }
  void EscreverPaciente(tPaciente *paciente,char *sus, char *path){
     char path_r[60];
-    sprintf(path_r,"%s/buscas/busca_%d",path, sus);
-    printf("%s\n",path_r);
-     
+    sprintf(path_r,"%s/buscas/busca_%s",path, sus);
     FILE *file = fopen(path_r,"w");
+    if(!file){
+        printf("Erro ao abrir o arquivo\n");
+        exit(-1);
+    }
+
     fprintf(file,"NOME: %s\n", paciente->nome);
     int idade = CalcularIdade(paciente->nasc);
     fprintf(file,"DATA DE NASCIMENTO: %d/%d/%d (%d)ANOS\n",Dia(paciente->nasc),
@@ -117,12 +120,8 @@ tPaciente * AtenderPaciente(tPaciente *paciente, char *path){
     fprintf(file,"FUMANTE: %s\n",paciente->fuma );
     fprintf(file,"ALERGIA A MEDICAMENTO: %s\n", paciente->alerg);
     fprintf(file,"HISTORICO DE CANCER: %s\n", paciente->hist_canc);
-    fprintf(file, "TIPO DE PELE: %s\n", paciente->pele);
-    EscreverLesoes(paciente->lesoes);
+    fprintf(file,"TIPO DE PELE: %s\n", paciente->pele);
+    fclose(file);
+    EscreverLesoes(paciente->lesoes, path_r);
     
  }
- DIABETES: SIM
-FUMANTE: NAO
-ALERGIA A MEDICAMENTO: NAO
-HISTORICO DE CANCER: NAO
-TIPO DE PELE: II

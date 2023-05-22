@@ -34,3 +34,33 @@ tLesao *CriarELerLesao(){
  char * RetornarLog(tLesao *lesao){
     return lesao->rot;
  }
+ int RetornarQtdCiru(tLesao **lesao, int tam){
+    int i,cont=0;
+    for(i=0; i<tam;i++){
+        cont += lesao[i]->ciru;
+    }
+    return cont;
+ }
+ int RetornarQtdCrio(tLesao **lesao, int tam){
+    int i,cont=0;
+    for(i=0; i<tam;i++){
+        cont += lesao[i]->crio;
+    }
+    return cont;
+ }
+ void EscreverLesao(tLesao *lesao,char *path){
+    FILE * file= fopen(path,"a");
+    if(!file){
+        printf("Erro ao abrir o arquivo\n");
+        exit(-1);
+    }
+    char str[30];
+    memset(str,'\0', sizeof(str));
+    if(lesao->ciru){
+        strcpy(str,"- ENVIADA PARA CIRURGIA")
+    }else if(lesao->crio){
+        strcpy(str, "- ENVIADA PARA CRIOTERAPIA");
+    }
+
+    fprintf(file,"%s - %s - %s - %.0fMM %s\n", lesao->rot, lesao->diag, lesao->reg_corp, lesao->tam, str);
+ }

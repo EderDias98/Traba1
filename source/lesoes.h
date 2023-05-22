@@ -5,4 +5,5 @@ typedef struct lesoes tLesoes;
 void LiberarLesoes(tLesoes *lesoes);
 tLesoes * CadastrarLesoes(tLesoes *lesoes);
 void ArmazenarLogs(tLesoes *lesoes,char *sus, char *path);
+void EscreverLesoes(tLesoes * lesoes, char *path);
 #endif
