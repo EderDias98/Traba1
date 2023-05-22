@@ -118,6 +118,7 @@ tPaciente * AtenderPaciente(tPaciente *paciente, char *path){
     fprintf(file,"ALERGIA A MEDICAMENTO: %s\n", paciente->alerg);
     fprintf(file,"HISTORICO DE CANCER: %s\n", paciente->hist_canc);
     fprintf(file, "TIPO DE PELE: %s\n", paciente->pele);
+    EscreverLesoes(paciente->lesoes);
     
  }
  DIABETES: SIM
