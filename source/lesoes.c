@@ -118,8 +118,10 @@ tDiagnosticos *PreencherDiagnosticos2(tDiagnosticos *diagnosticos,tLesoes *lesoe
     int i;
     char **str = (char *) malloc(sizeof(char*));
     for(i=0; i<tam; i++){
-        str =RetornarDiagnostico(diagnosticos,lesoes->vet[i]);
+        str =RetornarDiagnostico(lesoes->vet[i]);
         diagnosticos = PreencherDiagnosticos3(diagnosticos,*str)
     }
+
     free(str);
+    return diagnosticos;
 }

@@ -224,6 +224,11 @@ int RetornarQtdCrioterapias1(tPaciente **paciente_vet,int tam){
 tDiagnosticos * PreencherDiagnosticos1(tDiagnosticos *diagnosticos, tPaciente **pacientes_vet, int tam_p){
     int i;
     for(i=0; i<tam;i++){
-        PreencherDiagnosticos2(diagnosticos,pacientes_vet[i]->lesoes);
+    diagnosticos =  PreencherDiagnosticos2(diagnosticos,pacientes_vet[i]->lesoes);
     }
+    return diagnosticos;
+}
+void MudarPorcentagem(tDiagnosticos * diagnosticos,int tam,int qtd_l){
+    int i;
+    for(i=0; i<diag)
 }

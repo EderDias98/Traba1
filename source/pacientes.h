@@ -10,5 +10,5 @@ void GerarRelatorio(tPacientes *pacientes,char *path);
 int  AcharIndexPacientes(tPacientes * pacientes,char *sus);
 tPacientes * RealizarConsulta(tPacientes * pacientes, char * path);
 void RealizarBusca(tPacientes * pacientes, char *path);
- PreencherDiagnosticos1(tDiagnosticos *diagnosticos);
+
 #endif

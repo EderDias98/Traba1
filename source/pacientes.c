@@ -79,7 +79,11 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     fprintf(file,"NUMERO TOTAL DE CRIOTERAPIAS: %d (%.2f%%)\n",qtd_cr, (qtd_cr/(float)qtd_l));
     fprintf(file,"DISTRIBUICAO POR DIAGNOSTICO:\n");
     tDiagnosticos *diagnosticos= CriarDiagnosticos();
-    diagnosticos = PreencherDiagnosticos1(diagnosticos, RetornartDiagnosticosVet(diagnosticos), pacientes->tam );
+    diagnosticos = PreencherDiagnosticos1(diagnosticos, RetornarDiagnosticosVet(diagnosticos), pacientes->tam);
+    OrdernarDiagnosticos(diagnosticos);
+    MudarPorcentagem(diagnosticos, qtd_l);
+    ImprimirDisDiagnosticos(diagnosticos,RetornarTamanhoDiagnosticos(diagnosticos), path);
+    
 
  }
  tPacientes * RealizarConsulta(tPacientes * pacientes, char *path){

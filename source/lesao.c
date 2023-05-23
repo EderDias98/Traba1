@@ -74,3 +74,6 @@ int EhCirurgia(tLesao * lesao){
 int EhCrioterapia(tLesao * lesao){
     return lesao->crio;
 }
+char * RetornarDiagnostico(tLesao *lesao){
+    return  lesao->diag;
+}

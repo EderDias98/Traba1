@@ -16,5 +16,6 @@ void EscreverLesao(tLesao *lesao,char *path);
 int RetornarTamLesao2(tLesao * lesao);
 int EhCirurgia(tLesao * lesao);
 int EhCrioterapia(tLesao * lesao);
+char * RetornarDiagnostico(tLesao *lesao);
 
 #endif
