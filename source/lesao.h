@@ -6,16 +6,19 @@
 #include <string.h>
 #include <math.h>
 #include "diagnosticos.h"
+#include <ctype.h>
 
 typedef struct lesao tLesao;
-tLesao *CriarELerLesao();
-char * RetornarLog(tLesao *lesao);
+tLesao * CriarELerLesao(char *rotulo);
+tLesao **CriarVetLesao();
 int RetornarQtdCiru(tLesao **lesao, int tam);
 int RetornarQtdCrio(tLesao **lesao, int tam);
 void EscreverLesao(tLesao *lesao,char *path);
 int RetornarTamLesao2(tLesao * lesao);
-int EhCirurgia(tLesao * lesao);
-int EhCrioterapia(tLesao * lesao);
-char * RetornarDiagnostico(tLesao *lesao);
-
+char * RetornarNomeDiagnostico_L(tLesao *lesao);
+char * RetornarRotulo(tLesao *lesao);
+void EhPonteiroNULL(void *p);
+void ConverterEmMaiusculas(char *str);
+void LiberarLesao(tLesao* lesao);
+void LiberarPonteiro(void *p);
 #endif

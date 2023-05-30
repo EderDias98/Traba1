@@ -1,14 +1,14 @@
-#ifndef DIAGNOSTICO_H
-#define DIAGNOSTICO_H
-#include "diagnostico"
+#ifndef DIAGNOSTICOS_H
+#define DIAGNOSTICOS_H
+#include "diagnostico.h"
 typedef struct diagnosticos tDiagnosticos;
 tDiagnosticos * CriarDiagnosticos();
-
-tDiagnosticos * PreencherDiagnosticos3(tDiagnosticos *diagnosticos,char *str);
+void LiberarDiagnosticos(tDiagnosticos *diagnosticos);
+void PreencherDiagnosticos_D(tDiagnosticos *diagnosticos,char *str);
 void AumentarTamanhoDiagnosticos(tDiagnosticos *diagnosticos);
-RetornarTamanhoDiagnosticos(tDiagnosticos *diagnosticos);
-tDiagnosticos *RetornarDiagnosticosVet(tDiagnosticos *diagnosticos);
+int RetornarTamanhoDiagnosticos(tDiagnosticos *diagnosticos);
+
 void OrdernarDiagnosticos(tDiagnosticos * diagnosticos);
 void MudarPorcentagem(tDiagnosticos * diagnosticos,int qtd_l);
-ImprimirDisDiagnosticos(tDiagnosticos * diagnosticos, int tam,char path);
+void ImprimirDiagnosticos(tDiagnosticos * diagnosticos,char *path);
 #endif

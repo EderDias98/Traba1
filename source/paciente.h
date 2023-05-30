@@ -8,7 +8,7 @@ tPaciente *LerECriarPaciente();
 void LiberarPaciente(tPaciente *paciente);
 tPaciente **CriarVetPacientes();
 void EscreverRelatorio(tPaciente *paciente,char *path);
-tPaciente * AtenderPaciente(tPaciente *paciente, char *path);
+void AtenderPaciente(tPaciente *paciente, char *path);
 int QtdPaciAten(tPaciente ** pacientes_vet, int tam);
 int IdadeMedia(tPaciente ** pacientes_vet, int tam);
 int DesvioPadraoIdade(tPaciente ** pacientes_vet, int tam, int media);
@@ -20,5 +20,7 @@ float DesvioPadraoLesoes(tPaciente **paciente_vet,int tam, int media);
 int RetornarQtdLesoes(tPaciente **paciente_vet,int tam);
 int RetornarQtdCirurgias1(tPaciente **paciente_vet,int tam);
 int RetornarQtdCrioterapias1(tPaciente **paciente_vet,int tam);
-tDiagnosticos * PreencherDiagnosticos1(tDiagnosticos *diagnosticos, tPaciente **pacientes_vet, int tam_p);
+void PreencherDiagnosticos_P(tDiagnosticos *diagnosticos, tPaciente **pacientes_vet, int tam_p);
+void EscreverPaciente(tPaciente *paciente,char *sus, char *path);
+char *RetornarNomePaciente(tPaciente *paciente);
 #endif

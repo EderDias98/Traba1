@@ -9,7 +9,7 @@ void EscreverLesoes(tLesoes * lesoes, char *path);
 int RetornarTamLesoes(tLesoes *lesoes);
 int RetornarTamLesao1(tLesoes *lesoes, int idx);
 int RetornarQtdCirurgias2(tLesoes *lesoes);
-
+tLesoes* PreencherLesoes(tLesoes *lesoes, char * rotulo);
 int RetornarQtdCrioterapias2(tLesoes *lesoes);
-tDiagnosticos *PreencherDiagnosticos2(tDiagnosticos *diagnosticos,tLesoes *lesoes, int tam);
+void PreencherDiagnosticos_L(tDiagnosticos *diagnosticos,tLesoes *lesoes, int tam);
 #endif

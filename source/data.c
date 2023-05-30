@@ -7,6 +7,7 @@ struct data{
 
 tData *CriarELerData(){
     tData *data = (tData *) malloc(sizeof(tData));
+    EhPonteiroNULL(data);
     scanf("%d/%d/%d%*c", &data->dia, &data->mes, &data->ano);
     return data;
 }
@@ -54,9 +55,8 @@ int TipoDeMes(int mes){
         return 0;
     return 1;
  }
- void LiberaData(tData *data){
-    if(data !=NULL)
-        free(data);
+ void LiberarData(tData *data){
+   LiberarPonteiro(data);
  }
 
 int Dia(tData *data){
@@ -76,12 +76,12 @@ int CalcularIdade(tData * data){
     int idade;
     idade = referencia.ano - data->ano;
     if(data->mes > referencia.mes){
-        return idade;
-    }else if(data->mes < referencia.mes){
         return idade -1;
+    }else if(data->mes < referencia.mes){
+        return idade ;
     }else {
-        if((data->dia > referencia.dia) && (data->dia==referencia.dia)){
-            return idade;
-        }else return idade -1;
+        if((data->dia > referencia.dia) && (data->mes==referencia.mes)){
+            return idade -1;
+        }else return idade;
     }
 }

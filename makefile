@@ -19,8 +19,8 @@ CC=gcc
 CC_FLAGS=-c         \
          -W         \
          -Wall      \
-         -g
- 
+         -g         \
+
 # Command used at clean target
 RM = rm -rf
  
@@ -31,7 +31,7 @@ all: objFolder $(PROJ_NAME)
  
 $(PROJ_NAME): $(OBJ)
 	@ echo 'Building binary using GCC linker: $@'
-	$(CC) $^ -o $@
+	$(CC) $^ -o $@ -lm
 	@ echo 'Finished building binary: $@'
 	@ echo ' '
  

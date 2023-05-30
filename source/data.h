@@ -1,6 +1,7 @@
 #ifndef DATA_H
 #define DATA_H
 #include <stdio.h>
+#include "lesao.h"
 
 
 typedef struct data tData;
@@ -23,7 +24,7 @@ int TipoDeMes(int mes);
 //Verifica se a data esta de acordo com os padroes estabelcidos
  int EhDataCerta(tData *data);
 
- void LiberaData(tData *data);
+ void LiberarData(tData *data);
 
 int Dia(tData *data);
 int Mes(tData *data);

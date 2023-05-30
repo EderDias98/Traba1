@@ -25,8 +25,7 @@ int main(int argc , char *argv[]){
         switch (opcao){
         case 'p':
             
-            pacientes = CadastrarPacientes(pacientes);
-            
+            CadastrarPacientes(pacientes);
             break;
         case 'a':
         

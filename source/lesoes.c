@@ -10,76 +10,70 @@ struct lesoes{
 
 tLesoes *CriarLesoes(){
     tLesoes *lesoes = (tLesoes *) malloc(sizeof(tLesoes));
+    EhPonteiroNULL(lesoes);
+    lesoes->vet = NULL;
     lesoes->tam=0; 
     lesoes->qtd_ciru=0;
     lesoes->qtd_crio=0;
+    return lesoes;
 }
 
 
-tLesoes *CriarVetorLesoes(tLesoes *lesoes){
+tLesoes * PreencherLesoes(tLesoes *lesoes, char *rotulo){
     if(lesoes->tam==0){
         lesoes->tam++;
-        lesoes->vet = (tLesao **) malloc(sizeof(tLesao*));
-        lesoes->vet[lesoes->tam-1] = CriarELerLesao();
-        return lesoes;
-    }
+        lesoes->vet = CriarVetLesao();
+        lesoes->vet[lesoes->tam-1] = CriarELerLesao(rotulo);
+    }else{
     lesoes->tam++;
     int idx =lesoes->tam-1;
     lesoes->vet = realloc(lesoes->vet, sizeof(tLesao*)*(lesoes->tam));
-    lesoes->vet[idx] = CriarELerLesao();
-
+    lesoes->vet[idx] = CriarELerLesao(rotulo);
+    }
     return lesoes;
 }
 void LiberarLesoes(tLesoes *lesoes){
     int i;
     for(i=0; i<lesoes->tam; i++){
-        if(!lesoes->vet[i])
-            free(lesoes->vet[i]);
+        if(!lesoes->vet){
+            break;
+        }
+       LiberarLesao(lesoes->vet[i]);
     }
-    if(!lesoes->vet)
-        free(lesoes->vet);
-    if(!lesoes)
-        free(lesoes);
+    LiberarPonteiro(lesoes->vet);
+    LiberarPonteiro(lesoes);
 }
 tLesoes * CadastrarLesoes(tLesoes *lesoes){
     lesoes = CriarLesoes();
-    printf("Quantidade de lesoes\n");
-    int n;
-    scanf("%d%*c", &n);
     int i;
-    for(i=0;i<n;i++){
-        lesoes = CriarVetorLesoes(lesoes);
-    }
-    for(i=0; i<lesoes->tam;i++){
-        if(EhCirurgia(lesoes->vet[i])){
-            lesoes->qtd_ciru++;
+    char rotulo[4];
+    for(i=0;;i++){ 
+        scanf("%[^\n]%*c",rotulo);
+        if(!strcmp("E", rotulo)){
+            break;
         }
-        if(EhCrioterapia(lesoes->vet[i])){
-            lesoes->qtd_crio++;
-        }
+        lesoes = PreencherLesoes(lesoes,rotulo);
+       
+
     }
+    lesoes->qtd_ciru = RetornarQtdCiru(lesoes->vet,lesoes->tam);
+    lesoes->qtd_crio = RetornarQtdCrio(lesoes->vet,lesoes->tam);
     return lesoes;
  }
 void ArmazenarLogs(tLesoes *lesoes,char *sus, char *path){
 
-    char **log =(char **) malloc(sizeof (char *));
     char path_r[60];
     static int id=0;
     id++;
 
     sprintf(path_r,"%s/logs/log_%d",path, id);
-    printf("%s\n",path_r);
-     
-    FILE *file = fopen(path_r,"a");
+    // printf("%s\n",path_r);
+    FILE *file = fopen(path_r,"w");
     fprintf(file,"%s\n", sus);
-     
+       
     for(int i=0;i<lesoes->tam;i++){
-        log[0] = RetornarLog(lesoes->vet[i]);
-        
-        fprintf(file,"%s\n", log[0]);  
-
+        fprintf(file,"%s\n", RetornarRotulo(lesoes->vet[i]));
     }
-    free(log);
     fclose(file);
 }
 void EscreverLesoes(tLesoes * lesoes, char *path){
@@ -89,17 +83,19 @@ void EscreverLesoes(tLesoes * lesoes, char *path){
         exit(-1);
     }
     fprintf(file,"LESOES:\n");
+    if(lesoes->tam){
     fprintf(file,"TOTAL: %d\n", lesoes->tam);
     lesoes->qtd_ciru = RetornarQtdCiru(lesoes->vet, lesoes->tam);
     lesoes->qtd_crio = RetornarQtdCrio(lesoes->vet, lesoes->tam);
     fprintf(file,"ENVIADA PARA CIRURGIA: %d\n", lesoes->qtd_ciru);
-    fprintf(file,"ENVIADA PARA CRIOTERAPIA: %d\n\n", lesoes->qtd_crio);
+    fprintf(file,"ENVIADA PARA CRIOTERAPIA: %d\n", lesoes->qtd_crio);
     fprintf(file,"DESCRICAO DAS LESOES:\n");
     int i;
-    for(i=0; i<lesoes->tam;i++){
+    for(i=lesoes->tam-1; i>=0;i--){
         EscreverLesao(lesoes->vet[i],path);
     }
-
+    }
+    fclose(file);
 }
 int RetornarTamLesoes(tLesoes *lesoes){
     return lesoes->tam;
@@ -114,14 +110,10 @@ int RetornarQtdCirurgias2(tLesoes *lesoes){
 int RetornarQtdCrioterapias2(tLesoes *lesoes){
     return lesoes->qtd_crio;
  }
-tDiagnosticos *PreencherDiagnosticos2(tDiagnosticos *diagnosticos,tLesoes *lesoes, int tam){
+void PreencherDiagnosticos_L(tDiagnosticos *diagnosticos,tLesoes *lesoes, int tam){
     int i;
-    char **str = (char *) malloc(sizeof(char*));
     for(i=0; i<tam; i++){
-        str =RetornarDiagnostico(lesoes->vet[i]);
-        diagnosticos = PreencherDiagnosticos3(diagnosticos,*str)
+        PreencherDiagnosticos_D(diagnosticos,RetornarNomeDiagnostico_L(lesoes->vet[i]));
+       
     }
-
-    free(str);
-    return diagnosticos;
 }
