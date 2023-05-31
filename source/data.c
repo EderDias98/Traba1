@@ -11,9 +11,9 @@ tData *CriarELerData(){
     data->ano=0;
     data->mes=0;
     data->dia=0;
-    char dat[10];
-    scanf("%[^\n]%*c",dat); 
-    sscanf(dat,"%d/%d/%d", &data->dia, &data->mes, &data->ano);
+    // char dat[10];
+    // scanf("%[^\n]%*c",dat); 
+    scanf("%d/%d/%d%*c", &data->dia, &data->mes, &data->ano);
     return data;
 }
 void ImprimirData(tData *data){

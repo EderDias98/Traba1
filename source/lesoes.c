@@ -34,12 +34,17 @@ tLesoes * PreencherLesoes(tLesoes *lesoes, char *rotulo){
 }
 void LiberarLesoes(tLesoes *lesoes){
     int i;
+    if(!lesoes){
+        return;
+    }
     for(i=0; i<lesoes->tam; i++){
         if(!lesoes->vet){
+            
             break;
         }
        LiberarLesao(lesoes->vet[i]);
     }
+       
     LiberarPonteiro(lesoes->vet);
     LiberarPonteiro(lesoes);
 }

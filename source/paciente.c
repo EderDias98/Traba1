@@ -28,6 +28,7 @@ struct data{
 
 tPaciente *LerECriarPaciente(){
     tPaciente *paciente = (tPaciente *) malloc(sizeof(tPaciente));
+    paciente->lesoes=NULL;
     EhPonteiroNULL(paciente);
     memset(paciente->nome,'\0',sizeof(paciente->nome));
     scanf("%[^\n]%*c", paciente->nome);
@@ -62,7 +63,9 @@ void LiberarPaciente(tPaciente *paciente){
 
     LiberarData(paciente->nasc);    
     LiberarLesoes(paciente->lesoes);
+ 
     LiberarPonteiro(paciente);
+ 
 }
 tPaciente **CriarVetPacientes(){
     tPaciente **paciente_vet = (tPaciente **) malloc(sizeof(tPaciente *));
@@ -190,6 +193,9 @@ float DistribuicaoOutros(tPaciente ** pacientes_vet, int tam){
 float TamanhoMedioLesao(tPaciente **paciente_vet, int tam){
     int i,j,soma=0, cont=0,tam_l=0;
     for(i=0; i<tam; i++){
+        if(!paciente_vet[i]->lesoes){
+            continue;
+        }
         tam_l =RetornarTamLesoes(paciente_vet[i]->lesoes);
         for(j=0; j<tam_l;j++){
             soma +=RetornarTamLesao1(paciente_vet[i]->lesoes,j);
@@ -204,6 +210,9 @@ float TamanhoMedioLesao(tPaciente **paciente_vet, int tam){
 float DesvioPadraoLesoes(tPaciente **paciente_vet,int tam, int media){
     int i,j,desvio_p=0, cont=0,tam_l=0;
     for(i=0; i<tam; i++){
+        if(!paciente_vet[i]->lesoes){
+            continue;
+        }
         tam_l =RetornarTamLesoes(paciente_vet[i]->lesoes);
         for(j=0; j<tam_l;j++){
             desvio_p += pow(RetornarTamLesao1(paciente_vet[i]->lesoes,j) - media,2);
@@ -219,6 +228,9 @@ float DesvioPadraoLesoes(tPaciente **paciente_vet,int tam, int media){
 int RetornarQtdLesoes(tPaciente **paciente_vet,int tam){
     int i,j,cont=0,tam_l=0;
     for(i=0; i<tam; i++){
+        if(!paciente_vet[i]->lesoes){
+            continue;
+        }
         tam_l =RetornarTamLesoes(paciente_vet[i]->lesoes);
         for(j=0; j<tam_l;j++){
             cont++;
@@ -229,6 +241,9 @@ int RetornarQtdLesoes(tPaciente **paciente_vet,int tam){
 int RetornarQtdCirurgias1(tPaciente **paciente_vet,int tam){
     int i,cont=0;
     for(i=0; i<tam; i++){
+        if(!paciente_vet[i]->lesoes){
+            continue;
+        }
         cont+= RetornarQtdCirurgias2(paciente_vet[i]->lesoes);
     }
     return cont;    
@@ -236,14 +251,22 @@ int RetornarQtdCirurgias1(tPaciente **paciente_vet,int tam){
 int RetornarQtdCrioterapias1(tPaciente **paciente_vet,int tam){
     int i,cont=0;
     for(i=0; i<tam; i++){
+        if(!paciente_vet[i]->lesoes){
+            continue;
+        }
         cont+= RetornarQtdCrioterapias2(paciente_vet[i]->lesoes);
     }
     return cont;    
 }
 void PreencherDiagnosticos_P(tDiagnosticos *diagnosticos, tPaciente **pacientes_vet, int tam_p){
     int i;
-    
+     
     for(i=0; i<tam_p;i++){
+       
+    if(!pacientes_vet[i]->lesoes){
+        continue;
+    }
+    
     PreencherDiagnosticos_L(diagnosticos,pacientes_vet[i]->lesoes,RetornarTamLesoes(pacientes_vet[i]->lesoes));
    
     }

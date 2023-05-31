@@ -33,6 +33,10 @@ void CadastrarPacientes(tPacientes *pacientes){
         idx = pacientes->tam -1;
         pacientes->vet = realloc(pacientes->vet, sizeof(tPaciente *)*pacientes->tam);
         pacientes->vet[idx] = paciente;
+        // printf("%s",RetornarNomePaciente(pacientes->vet[idx]));
+        // if(idx==2){
+        //     exit(-1);
+        // }
         }
     }else{
         printf("Nao é possivel cadastrar esse usuário pois ele já foi cadastrado\n");
@@ -51,12 +55,14 @@ int EhSusUnico(tPacientes *pacientes, char *sus){
 }
 void LiberarPacientes(tPacientes *pacientes){
     int i;
+     
     for(i=0; i<pacientes->tam;i++){
         if(!pacientes->vet){
             break;
         }
         LiberarPaciente(pacientes->vet[i]);
     }
+   
     LiberarPonteiro(pacientes->vet);
     LiberarPonteiro(pacientes);
  }
@@ -74,13 +80,14 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     // Número total de pacientes que possui pelo menos um atendimento
     fprintf(file,"NUMERO TOTAL DE PACIENTES ATENDIDOS: %d\n",QtdPaciAten(pacientes->vet, pacientes->tam));
     int media = IdadeMedia(pacientes->vet, pacientes->tam);
-     
+   
     
     fprintf(file,"IDADE MEDIA: %d +- %d ANOS\n", media, DesvioPadraoIdade(pacientes->vet,pacientes->tam,media));
     float df,dm,dt;
     df = DistribuicaoFeminina(pacientes->vet,pacientes->tam);
     dm = DistribuicaoMasculina(pacientes->vet,pacientes->tam);
     dt = DistribuicaoOutros(pacientes->vet,pacientes->tam);
+    
     if(EhNumInt(df)){
         fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.0f%%\n",df);
     }else{
@@ -98,7 +105,6 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     }
  
     media =  TamanhoMedioLesao(pacientes->vet, pacientes->tam);
-      
     fprintf(file,"TAMANHO MEDIO DAS LESOES: %d +- %.0f MM\n",media, DesvioPadraoLesoes(pacientes->vet, pacientes->tam,media));
     int qtd_l = RetornarQtdLesoes(pacientes->vet, pacientes->tam);
     fprintf(file,"NUMERO TOTAL DE LESOES: %d\n",qtd_l );
@@ -114,13 +120,15 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     fprintf(file,"DISTRIBUICAO POR DIAGNOSTICO:\n");
 
     tDiagnosticos *diagnosticos= CriarDiagnosticos();
+  
     PreencherDiagnosticos_P(diagnosticos, pacientes->vet, pacientes->tam);
-   
+
     OrdernarDiagnosticos(diagnosticos);
  
     MudarPorcentagem(diagnosticos, qtd_l);
     fclose(file);
     ImprimirDiagnosticos(diagnosticos, path_r);
+    
     LiberarDiagnosticos(diagnosticos);
  }
  void RealizarConsulta(tPacientes * pacientes, char *path){
@@ -154,7 +162,9 @@ void RealizarBusca(tPacientes * pacientes, char *path){
         printf("O paciente precisa estar cadastrado\n");
         exit(-1);
     }
+    
     EscreverPaciente(pacientes->vet[idx],sus,path);
+    
 }
 float RetornarPorcentagem(int n, int total){
     if(total==0){
