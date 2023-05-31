@@ -21,4 +21,5 @@ void EhPonteiroNULL(void *p);
 void ConverterEmMaiusculas(char *str);
 void LiberarLesao(tLesao* lesao);
 void LiberarPonteiro(void *p);
+int EhNumInt(float num);
 #endif

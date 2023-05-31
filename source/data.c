@@ -8,7 +8,12 @@ struct data{
 tData *CriarELerData(){
     tData *data = (tData *) malloc(sizeof(tData));
     EhPonteiroNULL(data);
-    scanf("%d/%d/%d%*c", &data->dia, &data->mes, &data->ano);
+    data->ano=0;
+    data->mes=0;
+    data->dia=0;
+    char dat[10];
+    scanf("%[^\n]%*c",dat); 
+    sscanf(dat,"%d/%d/%d", &data->dia, &data->mes, &data->ano);
     return data;
 }
 void ImprimirData(tData *data){

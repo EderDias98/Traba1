@@ -2,6 +2,8 @@
 
 
 #define TAM_INICIAL_PACIENTES 10
+#define FORMATO_F %.2f
+#define FORMATO_D %.0f
 
 struct pacientes{
     tPaciente ** vet;
@@ -73,20 +75,42 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     fprintf(file,"NUMERO TOTAL DE PACIENTES ATENDIDOS: %d\n",QtdPaciAten(pacientes->vet, pacientes->tam));
     int media = IdadeMedia(pacientes->vet, pacientes->tam);
      
-    fprintf(file,"IDADE MEDIA: %d +- %d ANOS\n", media, DesvioPadraoIdade(pacientes->vet,pacientes->tam,media));
-    fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.2f%%\n- MASCULINO: %.2f%%\n- OUTROS: %.2f%%\n",
     
-    DistribuicaoFeminina(pacientes->vet,pacientes->tam),DistribuicaoMasculina(pacientes->vet,pacientes->tam),DistribuicaoOutros(pacientes->vet,pacientes->tam));
-     
+    fprintf(file,"IDADE MEDIA: %d +- %d ANOS\n", media, DesvioPadraoIdade(pacientes->vet,pacientes->tam,media));
+    float df,dm,dt;
+    df = DistribuicaoFeminina(pacientes->vet,pacientes->tam);
+    dm = DistribuicaoMasculina(pacientes->vet,pacientes->tam);
+    dt = DistribuicaoOutros(pacientes->vet,pacientes->tam);
+    if(EhNumInt(df)){
+        fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.0f%%\n",df);
+    }else{
+        fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.2f%%\n",df);
+    }
+    if(EhNumInt(dm)){
+        fprintf(file,"- MASCULINO: %.0f%%\n",dm);
+    }else{
+        fprintf(file,"- MASCULINO: %.2f%%\n",dm);
+    }
+    if(EhNumInt(dt)){
+        fprintf(file,"- OUTROS: %.0f%%\n",dt);
+    }else{
+        fprintf(file,"- OUTROS: %.0f%%\n",dt);
+    }
+ 
     media =  TamanhoMedioLesao(pacientes->vet, pacientes->tam);
       
-    fprintf(file,"TAMANHO MEDIO DAS LESOES: %d +- %.0fMM\n",media, DesvioPadraoLesoes(pacientes->vet, pacientes->tam,media));
+    fprintf(file,"TAMANHO MEDIO DAS LESOES: %d +- %.0f MM\n",media, DesvioPadraoLesoes(pacientes->vet, pacientes->tam,media));
     int qtd_l = RetornarQtdLesoes(pacientes->vet, pacientes->tam);
     fprintf(file,"NUMERO TOTAL DE LESOES: %d\n",qtd_l );
     int qtd_ci=RetornarQtdCirurgias1(pacientes->vet, pacientes->tam);
     int qtd_cr = RetornarQtdCrioterapias1(pacientes->vet, pacientes->tam);
-    fprintf(file,"NUMERO TOTAL DE CIRURGIAS: %d (%.2f%%)\n",qtd_ci,RetornarPorcentagem(qtd_ci,qtd_l));
-    fprintf(file,"NUMERO TOTAL DE CRIOTERAPIAS: %d (%.2f%%)\n",qtd_cr,RetornarPorcentagem(qtd_cr,qtd_l));
+    float pc=RetornarPorcentagem(qtd_ci,qtd_l);
+    float pt = RetornarPorcentagem(qtd_cr,qtd_l);
+   
+    fprintf(file,"NUMERO TOTAL DE CIRURGIAS: %d (%.2f%%)\n",qtd_ci,pc);
+
+    fprintf(file,"NUMERO TOTAL DE CRIOTERAPIA: %d (%.2f%%)\n",qtd_cr,pt);
+    
     fprintf(file,"DISTRIBUICAO POR DIAGNOSTICO:\n");
 
     tDiagnosticos *diagnosticos= CriarDiagnosticos();

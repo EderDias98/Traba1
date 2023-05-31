@@ -29,20 +29,28 @@ struct data{
 tPaciente *LerECriarPaciente(){
     tPaciente *paciente = (tPaciente *) malloc(sizeof(tPaciente));
     EhPonteiroNULL(paciente);
+    memset(paciente->nome,'\0',sizeof(paciente->nome));
     scanf("%[^\n]%*c", paciente->nome);
     ConverterEmMaiusculas(paciente->nome);
     // paciente->nome = (char *) malloc(sizeof(char)*(strlen(nome)+1));
-    // memset(paciente->nome,'\0',strlen(nome)+1);
+
     // strncpy(paciente->nome,nome,strlen(nome));
-    scanf("%s%*c", paciente->sus);
+    memset(paciente->sus,'\0',sizeof(paciente->sus));
+    scanf("%[^\n]%*c", paciente->sus);
     paciente->nasc = CriarELerData();
     if(!EhDataCerta(paciente->nasc))
         printf("A data de nascimento do paciente %s está errada!\n",paciente->nome);
-    
-    scanf("%s%*c", paciente->tel);
-    
-    scanf("%s%*c",paciente->gen);
-     ConverterEmMaiusculas(paciente->gen);
+    memset(paciente->tel,'\0',sizeof(paciente->tel));
+    scanf("%[^\n]%*c", paciente->tel);
+    memset(paciente->gen,'\0',sizeof(paciente->gen));
+    scanf("%[^\n]%*c",paciente->gen);
+    ConverterEmMaiusculas(paciente->gen);
+    memset(paciente->diab,'\0',sizeof(paciente->diab));
+    memset(paciente->fuma,'\0',sizeof(paciente->fuma));
+    memset(paciente->alerg,'\0',sizeof(paciente->alerg));
+    memset(paciente->nome_alerg,'\0',sizeof(paciente->nome_alerg));
+    memset(paciente->hist_canc,'\0',sizeof(paciente->hist_canc));
+    memset(paciente->pele,'\0',sizeof(paciente->pele));
     paciente->atendimento=0;
 
     return paciente;
@@ -73,25 +81,25 @@ void EscreverRelatorio(tPaciente *paciente,char *path){
 }
 void AtenderPaciente(tPaciente *paciente, char *path){
     paciente->atendimento=1;
-    printf("O paciente possui diabetes?\n");
-    scanf("%s%*c",paciente->diab);
+    //printf("O paciente possui diabetes?\n");
+    scanf("%[^\n]%*c",paciente->diab);
     ConverterEmMaiusculas(paciente->diab);
-    printf("O paciente é fumante?\n");
-    scanf("%s%*c",paciente->fuma);
+    //printf("O paciente é fumante?\n");
+    scanf("%[^\n]%*c",paciente->fuma);
     ConverterEmMaiusculas(paciente->fuma);
-    printf("O paciente possui alergia a algum medicamento?\n");
-    scanf("%s%*c",paciente->alerg);
+    //printf("O paciente possui alergia a algum medicamento?\n");
+    scanf("%[^\n]%*c",paciente->alerg);
     ConverterEmMaiusculas(paciente->alerg);
     if(!strcmp(paciente->alerg, "SIM")){
-        printf("Quais medicamentos?\n");
-        scanf("%s%*c",paciente->nome_alerg);
+      // printf("Quais medicamentos?\n");
+        scanf("%[^\n]%*c",paciente->nome_alerg);
         ConverterEmMaiusculas(paciente->nome_alerg);
     }
-    printf("O paciente possui histórico de câncer?\n");
-    scanf("%s%*c",paciente->hist_canc);
+    //printf("O paciente possui histórico de câncer?\n");
+    scanf("%[^\n]%*c",paciente->hist_canc);
     ConverterEmMaiusculas(paciente->hist_canc);
-    printf("Qual o tipo de pele do paciente?\n");
-    scanf("%s%*c", paciente->pele);
+    //printf("Qual o tipo de pele do paciente?\n");
+    scanf("%[^\n]%*c", paciente->pele);
     ConverterEmMaiusculas(paciente->pele);
   
     paciente->lesoes =  CadastrarLesoes(paciente->lesoes);
@@ -110,8 +118,12 @@ void AtenderPaciente(tPaciente *paciente, char *path){
 
     fprintf(file,"NOME: %s\n", paciente->nome);
     int idade = CalcularIdade(paciente->nasc);
-    fprintf(file,"DATA DE NASCIMENTO: %02d/%02d/%d (%d ANOS)\n",Dia(paciente->nasc),
-    Mes(paciente->nasc),Ano(paciente->nasc), idade);
+    if(Dia(paciente->nasc)!=0){
+        fprintf(file,"DATA DE NASCIMENTO: %02d/%02d/%d (%d ANOS)\n",Dia(paciente->nasc),
+        Mes(paciente->nasc),Ano(paciente->nasc), idade);
+    }else{
+        fprintf(file,"DATA DE NASCIMENTO:  \n");
+    }
     fprintf(file,"GENERO: %s\n", paciente->gen);
     fprintf(file,"TELEFONE: %s\n",paciente->tel);
     fprintf(file,"DIABETES: %s\n",paciente->diab);
@@ -169,7 +181,9 @@ float DistribuicaoOutros(tPaciente ** pacientes_vet, int tam){
     for(i=0; i<tam;i++){
         if(!strcmp(pacientes_vet[i]->gen,"FEMININO") && !strcmp(pacientes_vet[i]->gen,"MASCULINO")){
             soma+=1;
+            
         }
+      
     }
     return (soma/(float)tam)*100;
 }

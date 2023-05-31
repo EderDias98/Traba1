@@ -17,22 +17,29 @@ tLesao *CriarELerLesao(char *rotulo){
     tLesao *lesao = (tLesao *) malloc(sizeof(tLesao));
     EhPonteiroNULL(lesao);
     //Ler lesao
-    printf("Digite Rotulo\n");
+   //printf("Digite Rotulo\n");
     ConverterEmMaiusculas(rotulo);
+    memset(lesao->rot,'\0',sizeof(lesao->rot));
+
     strncpy(lesao->rot,rotulo,strlen(rotulo));
-    printf("Digite Diagnostico\n");
+    //printf("Digite Diagnostico\n");
+    memset(lesao->diag,'\0',sizeof(lesao->diag));
     scanf("%[^\n]%*c", lesao->diag);
     ConverterEmMaiusculas(lesao->diag);
-    printf("Digite Regiao do Corpo\n");
+    //printf("Digite Regiao do Corpo\n");
+    memset(lesao->reg_corp,'\0',sizeof(lesao->reg_corp));
     scanf("%[^\n]%*c", lesao->reg_corp);
     ConverterEmMaiusculas(lesao->reg_corp);
-    printf("Digite Tamanho\n");
+    //printf("Digite Tamanho\n");
+    lesao->tam=0;
     scanf("%f%*c", &lesao->tam);
-    printf("Digite se é necessário cirurgia\n");
-    scanf("%s%*c", lesao->ciru);
+   // printf("Digite se é necessário cirurgia\n");
+    memset(lesao->ciru,'\0',sizeof(lesao->ciru));
+    scanf("%[^\n]%*c", lesao->ciru);
     ConverterEmMaiusculas(lesao->ciru);
-    printf("Digite se é necessáio crioterapia\n");
-    scanf("%s%*c", lesao->crio);
+    //printf("Digite se é necessáio crioterapia\n");
+    memset(lesao->crio,'\0',sizeof(lesao->crio));
+    scanf("%[^\n]%*c", lesao->crio);
     ConverterEmMaiusculas(lesao->crio);
     return lesao;
 }
@@ -72,12 +79,16 @@ void LiberarLesao(tLesao* lesao){
     char str[30];
     memset(str,'\0', sizeof(str));
     if( !strcmp("SIM",lesao->ciru)){
-        strcpy(str,"- ENVIADA PARA CIRURGIA");
+        strcpy(str," - ENVIADA PARA CIRURGIA");
     }else if(!strcmp("SIM",lesao->crio)){
-        strcpy(str, "- ENVIADA PARA CRIOTERAPIA");
+        strcpy(str, " - ENVIADA PARA CRIOTERAPIA");
     }
     // printf("@%s@", lesao->rot);
-    fprintf(file,"%s - %s - %s - %.0fMM %s\n", lesao->rot, lesao->diag, lesao->reg_corp, lesao->tam, str);
+    if(lesao->tam==0){
+        fprintf(file,"%s - %s - %s -  MM%s\n", lesao->rot, lesao->diag, lesao->reg_corp, str);
+    }else{
+        fprintf(file,"%s - %s - %s - %.0fMM%s\n", lesao->rot, lesao->diag, lesao->reg_corp, lesao->tam, str);
+    }
  }
 
  int RetornarTamLesao2(tLesao * lesao){
@@ -108,5 +119,14 @@ void ConverterEmMaiusculas(char *str){
 void LiberarPonteiro(void *p){
     if(p){
        free(p); 
+    }
+}
+int EhNumInt(float num) {
+    int float_part = (int)num;  
+
+    if (num == float_part) {
+        return 1;  
+    } else {
+        return 0; 
     }
 }

@@ -11,13 +11,13 @@ int main(int argc , char *argv[]){
     int cont=0;
 
     while(1){
-        printf("######################### MENU INICIAL ###########################\n");
-        printf("- Pre-cadastrar um paciente (P ou p)\n");
-        printf("- Iniciar um atendimento (A ou a)\n");
-        printf("- Buscar um paciente (B ou b)\n");
-        printf("- Gerar relatorio (R ou r)\n");
-        printf("- Finalizar programa (F ou f)\n");
-        printf("##################################################################\n");
+        // printf("######################### MENU INICIAL ###########################\n");
+        // printf("- Pre-cadastrar um paciente (P ou p)\n");
+        // printf("- Iniciar um atendimento (A ou a)\n");
+        // printf("- Buscar um paciente (B ou b)\n");
+        // printf("- Gerar relatorio (R ou r)\n");
+        // printf("- Finalizar programa (F ou f)\n");
+        // printf("##################################################################\n");
         char opcao;
         int flag=0;
         scanf("%c%*c", &opcao);

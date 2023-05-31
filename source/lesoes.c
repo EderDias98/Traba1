@@ -47,6 +47,7 @@ tLesoes * CadastrarLesoes(tLesoes *lesoes){
     lesoes = CriarLesoes();
     int i;
     char rotulo[4];
+    memset(rotulo, '\0', sizeof(rotulo));
     for(i=0;;i++){ 
         scanf("%[^\n]%*c",rotulo);
         if(!strcmp("E", rotulo)){

@@ -66,7 +66,9 @@ void ImprimirDiagnosticos_D(tDiagnostico **diagnostico_vet,int tam, char *path){
     }
     int i;
     for(i=0; i<tam;i++){
+      
         fprintf(file,"- %s: %d (%.2f%%)\n", diagnostico_vet[i]->diagnostico, diagnostico_vet[i]->total, diagnostico_vet[i]->porcentagem);
+        
     }
     fclose(file);
     
