@@ -51,14 +51,13 @@ void LiberarLesoes(tLesoes *lesoes){
 tLesoes * CadastrarLesoes(tLesoes *lesoes){
     lesoes = CriarLesoes();
     int i;
-    char rotulo[4];
-    memset(rotulo, '\0', sizeof(rotulo));
+    char diagnostico[40];
     for(i=0;;i++){ 
-        scanf("%[^\n]%*c",rotulo);
-        if(!strcmp("E", rotulo)){
+        scanf("%[^\n]%*c",diagnostico);
+        if(!strcmp("E", diagnostico)){
             break;
         }
-        lesoes = PreencherLesoes(lesoes,rotulo);
+        lesoes = PreencherLesoes(lesoes,diagnostico);
        
 
     }

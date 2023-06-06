@@ -88,22 +88,11 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     dm = DistribuicaoMasculina(pacientes->vet,pacientes->tam);
     dt = DistribuicaoOutros(pacientes->vet,pacientes->tam);
     
-    if(EhNumInt(df)){
-        fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.0f%%\n",df);
-    }else{
-        fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.2f%%\n",df);
-    }
-    if(EhNumInt(dm)){
-        fprintf(file,"- MASCULINO: %.0f%%\n",dm);
-    }else{
-        fprintf(file,"- MASCULINO: %.2f%%\n",dm);
-    }
-    if(EhNumInt(dt)){
-        fprintf(file,"- OUTROS: %.0f%%\n",dt);
-    }else{
-        fprintf(file,"- OUTROS: %.0f%%\n",dt);
-    }
- 
+  
+    fprintf(file,"DISTRIBUICAO POR GENERO:\n- FEMININO: %.2f%%\n",df);
+    fprintf(file,"- MASCULINO: %.2f%%\n",dm);    
+    fprintf(file,"- OUTROS: %.2f%%\n",dt);
+    
     media =  TamanhoMedioLesao(pacientes->vet, pacientes->tam);
     fprintf(file,"TAMANHO MEDIO DAS LESOES: %d +- %.0f MM\n",media, DesvioPadraoLesoes(pacientes->vet, pacientes->tam,media));
     int qtd_l = RetornarQtdLesoes(pacientes->vet, pacientes->tam);

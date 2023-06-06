@@ -11,8 +11,12 @@ struct lesao{
 
 };
 
-tLesao *CriarELerLesao(char *rotulo){
-
+tLesao *CriarELerLesao(char *diagnostico){
+    static int num=0;
+    num++;
+    char rotulo[10];
+    memset(rotulo, '\0', sizeof(rotulo));
+    snprintf(rotulo,sizeof(rotulo),"L%d",num );
     //Criar lesao
     tLesao *lesao = (tLesao *) malloc(sizeof(tLesao));
     EhPonteiroNULL(lesao);
@@ -24,7 +28,7 @@ tLesao *CriarELerLesao(char *rotulo){
     strncpy(lesao->rot,rotulo,strlen(rotulo));
     //printf("Digite Diagnostico\n");
     memset(lesao->diag,'\0',sizeof(lesao->diag));
-    scanf("%[^\n]%*c", lesao->diag);
+    strncpy(lesao->diag,diagnostico,strlen(diagnostico));
     ConverterEmMaiusculas(lesao->diag);
     //printf("Digite Regiao do Corpo\n");
     memset(lesao->reg_corp,'\0',sizeof(lesao->reg_corp));

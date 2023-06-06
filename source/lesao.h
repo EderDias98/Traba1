@@ -9,7 +9,7 @@
 #include <ctype.h>
 
 typedef struct lesao tLesao;
-tLesao * CriarELerLesao(char *rotulo);
+tLesao * CriarELerLesao(char *diagnostico);
 tLesao **CriarVetLesao();
 int RetornarQtdCiru(tLesao **lesao, int tam);
 int RetornarQtdCrio(tLesao **lesao, int tam);
