@@ -1,5 +1,6 @@
 #include "diagnostico.h"
 #define TAM_DIAG 50
+#define TIPOS_DIAGNOSTICOS 6
 
 struct diagnostico{
     char diagnostico[50];
@@ -12,6 +13,7 @@ tDiagnostico *CriarDiagnostico(){
    EhPonteiroNULL(diagnostico); 
    diagnostico->total = 0;
    diagnostico->porcentagem=0;
+   memset(diagnostico->diagnostico,'\0',sizeof(diagnostico->diagnostico));
    return diagnostico;
 }
 
@@ -22,19 +24,19 @@ void AumentarDiagnosticos(tDiagnostico * diagnostico){
     diagnostico->total++;
 }
 
-int EhUnicoDiagnostico(tDiagnostico **diagnosticos_vet, char *str, int tam){
-   
-    if(tam==0){
-        return 0;
-    }
+int IdxDoDiagnostico(tDiagnostico **diagnosticos_vet, char *str, int tam){
      
     int i;
     for(i=0; i<tam;i++){
+     
         if(!strcmp(str, diagnosticos_vet[i]->diagnostico)){
             return i;
+            
         }
+        
     }
-    return 0;
+    
+    return -1;
 }
 void OrdernarDiagnosticos_D(tDiagnostico **diagnostico_vet, int tam){
         
@@ -55,7 +57,11 @@ int Comparar(const void* a, const void* b) {
     }
 }
 void MudarPorcentagem_D(tDiagnostico *diagnostico,int qtd_l){
+    if(qtd_l==0){
+        diagnostico->porcentagem=0;
+    }else{
     diagnostico->porcentagem = (diagnostico->total/(float)qtd_l)*100;
+    }
 }
 
 void ImprimirDiagnosticos_D(tDiagnostico **diagnostico_vet,int tam, char *path){
@@ -70,13 +76,35 @@ void ImprimirDiagnosticos_D(tDiagnostico **diagnostico_vet,int tam, char *path){
         fprintf(file,"- %s: %d (%.2f%%)\n", diagnostico_vet[i]->diagnostico, diagnostico_vet[i]->total, diagnostico_vet[i]->porcentagem);
         
     }
+    fprintf(file,"\n");
     fclose(file);
     
 }
 
 tDiagnostico ** CriarVetDiagnostico(){
-    tDiagnostico ** diagnostico_vet = (tDiagnostico **) malloc(sizeof(tDiagnostico*));
+    tDiagnostico ** diagnostico_vet = (tDiagnostico **) malloc(sizeof(tDiagnostico*)*TIPOS_DIAGNOSTICOS);
     EhPonteiroNULL(diagnostico_vet);
+    int pos=0;
+    diagnostico_vet[pos] = CriarDiagnostico();
+    strcpy(diagnostico_vet[pos]->diagnostico,"CARCINOMA ESPINOCELULAR");
+    pos++;
+    diagnostico_vet[pos] = CriarDiagnostico();
+    strcpy(diagnostico_vet[pos]->diagnostico,"CERATOSE ACTINICA");
+    pos++;
+    diagnostico_vet[pos] = CriarDiagnostico();
+     strcpy(diagnostico_vet[pos]->diagnostico,"CERATOSE SEBORREICA");
+    pos++;
+    diagnostico_vet[pos] = CriarDiagnostico();
+      strcpy(diagnostico_vet[pos]->diagnostico,"CARCINOMA BASOCELULAR");
+
+    pos++;
+    diagnostico_vet[pos] = CriarDiagnostico();
+    strcpy(diagnostico_vet[pos]->diagnostico,"MELANOMA");
+  
+    pos++;
+    diagnostico_vet[pos] = CriarDiagnostico();
+    strcpy(diagnostico_vet[pos]->diagnostico,"NEVO");
+    
     return diagnostico_vet;
 }
 void PreencherNomeDiagnostico(tDiagnostico *diagnostico, char * str){

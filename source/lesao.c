@@ -11,9 +11,8 @@ struct lesao{
 
 };
 
-tLesao *CriarELerLesao(char *diagnostico){
-    static int num=0;
-    num++;
+tLesao *CriarELerLesao(char *diagnostico, int num){
+
     char rotulo[10];
     memset(rotulo, '\0', sizeof(rotulo));
     snprintf(rotulo,sizeof(rotulo),"L%d",num );

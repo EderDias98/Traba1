@@ -53,6 +53,8 @@ tPaciente *LerECriarPaciente(){
     memset(paciente->hist_canc,'\0',sizeof(paciente->hist_canc));
     memset(paciente->pele,'\0',sizeof(paciente->pele));
     paciente->atendimento=0;
+    //prencher o basico de atendimentos
+    paciente->lesoes = CriarLesoes();
 
     return paciente;
 }
@@ -83,7 +85,9 @@ void EscreverRelatorio(tPaciente *paciente,char *path){
     fclose(file);
 }
 void AtenderPaciente(tPaciente *paciente, char *path){
-    paciente->atendimento=1;
+    // Se o paciente já foi atendido
+
+    paciente->atendimento++;
     //printf("O paciente possui diabetes?\n");
     scanf("%[^\n]%*c",paciente->diab);
     ConverterEmMaiusculas(paciente->diab);
@@ -104,11 +108,11 @@ void AtenderPaciente(tPaciente *paciente, char *path){
     //printf("Qual o tipo de pele do paciente?\n");
     scanf("%[^\n]%*c", paciente->pele);
     ConverterEmMaiusculas(paciente->pele);
-  
-    paciente->lesoes =  CadastrarLesoes(paciente->lesoes);
+    int idx_aten=-1;
+    paciente->lesoes =  CadastrarLesoes(paciente->lesoes,paciente->atendimento,&idx_aten);
     
-    ArmazenarLogs(paciente->lesoes, paciente->sus,path);
-    
+    ArmazenarLogs(paciente->lesoes, paciente->sus,path,idx_aten);
+   
 }
  void EscreverPaciente(tPaciente *paciente,char *sus, char *path){
     char path_r[60];
@@ -129,13 +133,16 @@ void AtenderPaciente(tPaciente *paciente, char *path){
     }
     fprintf(file,"GENERO: %s\n", paciente->gen);
     fprintf(file,"TELEFONE: %s\n",paciente->tel);
+    if(!paciente->atendimento){
+        return;
+    }
     fprintf(file,"DIABETES: %s\n",paciente->diab);
     fprintf(file,"FUMANTE: %s\n",paciente->fuma );
     fprintf(file,"ALERGIA A MEDICAMENTO: %s\n", paciente->alerg);
     fprintf(file,"HISTORICO DE CANCER: %s\n", paciente->hist_canc);
-    fprintf(file,"TIPO DE PELE: %s\n", paciente->pele);
+    fprintf(file,"TIPO DE PELE: %s\n\n", paciente->pele);
     fclose(file);
-       
+ 
     EscreverLesoes(paciente->lesoes, path_r);
     
  }
@@ -182,7 +189,7 @@ float DistribuicaoFeminina(tPaciente ** pacientes_vet, int tam){
 float DistribuicaoOutros(tPaciente ** pacientes_vet, int tam){
     int soma=0,i;
     for(i=0; i<tam;i++){
-        if(!strcmp(pacientes_vet[i]->gen,"FEMININO") && !strcmp(pacientes_vet[i]->gen,"MASCULINO")){
+        if(strcmp(pacientes_vet[i]->gen,"FEMININO") && strcmp(pacientes_vet[i]->gen,"MASCULINO")){
             soma+=1;
             
         }
@@ -193,18 +200,21 @@ float DistribuicaoOutros(tPaciente ** pacientes_vet, int tam){
 float TamanhoMedioLesao(tPaciente **paciente_vet, int tam){
     int i,j,soma=0, cont=0,tam_l=0;
     for(i=0; i<tam; i++){
+        
         if(!paciente_vet[i]->lesoes){
             continue;
         }
         tam_l =RetornarTamLesoes(paciente_vet[i]->lesoes);
         for(j=0; j<tam_l;j++){
             soma +=RetornarTamLesao1(paciente_vet[i]->lesoes,j);
+                
             cont++;
         }
     }
     if(cont==0){
         return 0;
     }
+
     return (soma/cont);
 }
 float DesvioPadraoLesoes(tPaciente **paciente_vet,int tam, int media){

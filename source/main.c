@@ -2,15 +2,18 @@
 #include "pacientes.h"
 #include <ctype.h>
 
-int main(int argc , char *argv[]){
-    if(argc<2){
+int main(int argc, char *argv[])
+{
+    if (argc < 2)
+    {
         printf("É preciso informar o diretório de saida dos arquivos gerados pelo trabalho\n");
     }
-    char * path = argv[1];
+    char *path = argv[1];
     tPacientes *pacientes = CriarPacientes();
-    int cont=0;
+    int cont = 0;
 
-    while(1){
+    while (1)
+    {
         // printf("######################### MENU INICIAL ###########################\n");
         // printf("- Pre-cadastrar um paciente (P ou p)\n");
         // printf("- Iniciar um atendimento (A ou a)\n");
@@ -19,37 +22,40 @@ int main(int argc , char *argv[]){
         // printf("- Finalizar programa (F ou f)\n");
         // printf("##################################################################\n");
         char opcao;
-        int flag=0;
+        int flag = 0;
         scanf("%c%*c", &opcao);
         opcao = tolower(opcao);
-        switch (opcao){
+        switch (opcao)
+        {
         case 'p':
-            
+
             CadastrarPacientes(pacientes);
             break;
         case 'a':
-        
+           
             RealizarConsulta(pacientes, path);
-     
+            
             /* code */
             break;
         case 'r':
-            GerarRelatorio(pacientes,path);
+            
+            GerarRelatorio(pacientes, path);
             break;
         case 'f':
-            flag=1;
+            flag = 1;
             break;
         case 'b':
-            RealizarBusca(pacientes,path);
-            break;        
+            RealizarBusca(pacientes, path);
+            
+            break;
         default:
             break;
         }
-        if(flag==1)
+        if (flag == 1)
             break;
         cont++;
     }
-    //liberar toda memoria alocada no programa
+    // liberar toda memoria alocada no programa
     LiberarPacientes(pacientes);
 
     return 0;

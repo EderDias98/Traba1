@@ -6,23 +6,30 @@ cd ~/Traba1/
 make all
 cd -
 
-
+LimparPastas() {
+	rm -f $logss/*
+	rm -f $buscass/*
+	rm -f $relatorios/*
+}
 
 
 i=0
-j=1
+j=$1
 
 # Exibir os nomes de arquivos armazenados na array
+
+
 #set -x
-while true;do
-((j++))
-~/Traba1/trab1 ~/saida < ~/testes/teste_$j/entrada_$j
+
 logs=~/testes/teste_$j/logs/
 logss=~/saida/logs/
 buscas=~/testes/teste_$j/buscas/
 buscass=~/saida/buscas/
 relatorio=~/testes/teste_$j/relatorio/
 relatorios=~/saida/relatorio/
+LimparPastas
+~/Traba1/trab1 ~/saida < ~/testes/teste_$j/entrada_$j
+
 echo "Testando teste_$j"
 i=0
 readarray -t arquivos1 < <(find $logss  -type f -printf "%f\n")
@@ -48,9 +55,8 @@ readarray -t arquivos2 < <(find $relatorio  -type f -printf "%f\n")
 		diff $relatorio$arquivo $relatorios${arquivos2[i]}
 		((i++))
 	done
-#rm -rdf $buscass/*
-rm -rdf $logss/*
-if (($j==2));then
-	break;
-fi
-done
+	
+
+
+
+

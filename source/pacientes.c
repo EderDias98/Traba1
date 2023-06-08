@@ -22,6 +22,7 @@ void CadastrarPacientes(tPacientes *pacientes){
     
     tPaciente *paciente = LerECriarPaciente();
     int idx=0;
+    
     if(EhSusUnico(pacientes, RetornarSusPaciente(paciente))){
         if(pacientes->tam==0){
              pacientes->tam++;
@@ -42,7 +43,7 @@ void CadastrarPacientes(tPacientes *pacientes){
         printf("Nao é possivel cadastrar esse usuário pois ele já foi cadastrado\n");
         exit(-1);
     }
-
+    
 }
 
 int EhSusUnico(tPacientes *pacientes, char *sus){
@@ -111,7 +112,7 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
     tDiagnosticos *diagnosticos= CriarDiagnosticos();
   
     PreencherDiagnosticos_P(diagnosticos, pacientes->vet, pacientes->tam);
-
+   
     OrdernarDiagnosticos(diagnosticos);
  
     MudarPorcentagem(diagnosticos, qtd_l);
@@ -131,6 +132,7 @@ void GerarRelatorio(tPacientes *pacientes,char *path){
         exit(-1);
     }
     AtenderPaciente(pacientes->vet[idx], path);
+     
 
  }
 int  AcharIndexPacientes(tPacientes * pacientes,char *sus){
